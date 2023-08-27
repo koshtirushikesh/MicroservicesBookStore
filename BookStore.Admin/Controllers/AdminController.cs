@@ -41,6 +41,11 @@ namespace BookStore.Admin.Controllers
         [HttpPost("admin-login")]
         public IActionResult AdminLogin(AdminEntity adminEntity)
         {
+            if (!Regex.IsMatch(adminEntity.Email, RegexPatterns.email))
+                throw new Exception("email is not valid");
+            if (!Regex.IsMatch(adminEntity.Password, RegexPatterns.password))
+                throw new Exception("password is not valid");
+
             string loginToken = adminRepository.AdminLogin(adminEntity);
 
             if (loginToken != null)
