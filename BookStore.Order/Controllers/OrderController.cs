@@ -39,7 +39,6 @@ namespace BookStore.Order.Controllers
             string token = Request.Headers.Authorization.ToString(); // token will have "Bearer " which we need to remove
             token = token.Substring("Bearer ".Length); // now we will only have the actual jwt token - without Bearer and a space
 
-
             UserEntity user = await userServices.GetUserDetails(token);
             if (user != null)
             {

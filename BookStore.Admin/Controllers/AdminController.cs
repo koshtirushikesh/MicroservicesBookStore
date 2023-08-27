@@ -1,6 +1,8 @@
 ﻿using BookStore.Admin.Entity;
 using BookStore.Admin.Interface;
+using BookStore.Admin.Validation;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace BookStore.Admin.Controllers
 {
@@ -17,6 +19,15 @@ namespace BookStore.Admin.Controllers
         [HttpPost("add-admin")]
         public IActionResult AddAdmin(AdminEntity adminEntity)
         {
+            if(!Regex.IsMatch(adminEntity.FirstName, RegexPatterns.firstName))
+                throw new Exception("first name is not valid");
+            if (!Regex.IsMatch(adminEntity.LastName, RegexPatterns.lastName))
+                throw new Exception("last name is not valid");
+            if (!Regex.IsMatch(adminEntity.Email, RegexPatterns.email))
+                throw new Exception("email is not valid");
+            if (!Regex.IsMatch(adminEntity.Password, RegexPatterns.password))
+                throw new Exception("password is not valid");
+
             AdminEntity admin = adminRepository.AddAdmin(adminEntity);
 
             if (admin != null)

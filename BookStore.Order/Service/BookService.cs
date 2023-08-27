@@ -21,7 +21,6 @@ public class BookService : IBookServices
             {
                 string content = await response.Content.ReadAsStringAsync();
                 ResponseModel<BookEntity> responseModel = JsonConvert.DeserializeObject<ResponseModel<BookEntity>>(content);
-                //BookEntity book = JsonConvert.DeserializeObject<BookEntity>(responseModel.Data);
 
                 return responseModel.Data;
             }

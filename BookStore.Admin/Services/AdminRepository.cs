@@ -19,9 +19,14 @@ namespace BookStore.Admin.Services
 
         public AdminEntity AddAdmin(AdminEntity admin)
         {
-            adminDBContext.Admin.Add(admin);
-            adminDBContext.SaveChanges();
-            return admin;
+            var result = adminDBContext.Admin.FirstOrDefault( x => x.Email == admin.Email );
+            if(result == null)
+            {
+                adminDBContext.Admin.Add(admin);
+                adminDBContext.SaveChanges();
+                return admin;
+            }
+            return null;
         }
 
         public string AdminLogin(AdminEntity adminEntity)
