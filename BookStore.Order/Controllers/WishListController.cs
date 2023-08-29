@@ -35,5 +35,18 @@ namespace BookStore.Order.Controllers
 
             return BadRequest(new ResponseModel<string> { Status = false, Message = "unsuccesfull to add wish list" });
         }
+
+        [Authorize]
+        [HttpDelete("removeWishList")]
+        public IActionResult RemoveWishList(int bookID)
+        {
+            int userID = Convert.ToInt32(User.FindFirstValue("UserID"));
+            bool isRemove = wishListServices.RemoveWishList(bookID, userID);
+            if(isRemove)
+            {
+                return Ok(new ResponseModel<bool> { Status = true ,Message="succesfull to removed wish list"});
+            }
+            return BadRequest(new ResponseModel<bool> { Status = false, Message = "unsuccesfull to removed wish list" });
+        }
     }
 }

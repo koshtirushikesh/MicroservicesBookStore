@@ -33,6 +33,17 @@ namespace BookStore.Order.Service
             return null;
         }
 
+        public bool RemoveWishList(int bookID,int userID)
+        {
+            var result = orderDBContext.wishList.FirstOrDefault(x => x.BookID == bookID && x.UserID == userID);
+            if(result !=null)
+            {
+                orderDBContext.wishList.Remove(result);
+                orderDBContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         
     }
 }
