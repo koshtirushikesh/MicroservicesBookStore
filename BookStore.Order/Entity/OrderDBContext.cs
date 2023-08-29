@@ -10,5 +10,6 @@ namespace BookStore.Order.Entity
         
         }
         public DbSet<OrderEntity> order { get; set; }
+        public DbSet<WishListEntity> wishList { get; set; }
     }
 }

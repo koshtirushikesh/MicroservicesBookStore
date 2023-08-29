@@ -46,6 +46,25 @@ namespace BookStore.Order.Migrations
 
                     b.ToTable("order");
                 });
+
+            modelBuilder.Entity("BookStore.Order.Entity.WishListEntity", b =>
+                {
+                    b.Property<int>("WishListID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WishListID"));
+
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("WishListID");
+
+                    b.ToTable("wishList");
+                });
 #pragma warning restore 612, 618
         }
     }
