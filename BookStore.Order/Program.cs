@@ -49,11 +49,10 @@ namespace BookStore.Order
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("OrderDB"));
             });
-            builder.Services.AddTransient<IBookServices,BookService>();
-            builder.Services.AddTransient<IUserServices,UserServices>();
-            builder.Services.AddTransient<IOrderServices,OrderServices>();
+            builder.Services.AddTransient<IBookServices, BookService>();
+            builder.Services.AddTransient<IUserServices, UserServices>();
+            builder.Services.AddTransient<IOrderServices, OrderServices>();
             builder.Services.AddTransient<IWishListService, WishListService>();
-
             builder.Services.AddHttpClient("bookService", option =>
             {
                 option.BaseAddress = new Uri(builder.Configuration["BaseURL:Book"]);

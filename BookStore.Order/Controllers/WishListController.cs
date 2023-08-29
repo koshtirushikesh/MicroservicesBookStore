@@ -2,7 +2,6 @@
 using BookStore.Order.Interface;
 using BookStore.Order.Migrations;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -27,8 +26,8 @@ namespace BookStore.Order.Controllers
             string token = Request.Headers.Authorization.ToString(); // token will have "Bearer " which we need to remove
             token = token.Substring("Bearer ".Length); // now we will only have the actual jwt token - without Bearer and a space
 
-            WishListEntity wishList = await wishListServices.AddWishList(bookID, userID,token);
-            if(wishList != null)
+            WishListEntity wishList = await wishListServices.AddWishList(bookID, userID, token);
+            if (wishList != null)
             {
                 return Ok(new ResponseModel<WishListEntity> { Status = true, Message = "succesfully added to wish list", Data = wishList });
             }
@@ -42,11 +41,24 @@ namespace BookStore.Order.Controllers
         {
             int userID = Convert.ToInt32(User.FindFirstValue("UserID"));
             bool isRemove = wishListServices.RemoveWishList(bookID, userID);
-            if(isRemove)
+            if (isRemove)
             {
-                return Ok(new ResponseModel<bool> { Status = true ,Message="succesfull to removed wish list"});
+                return Ok(new ResponseModel<bool> { Status = true, Message = "succesfull to removed wish list" });
             }
             return BadRequest(new ResponseModel<bool> { Status = false, Message = "unsuccesfull to removed wish list" });
+        }
+
+        [HttpGet("getWishList")]
+        public async Task<IActionResult> GetWishListByUserID()
+        {
+            int userID = Convert.ToInt32(User.FindFirstValue("UserID"));
+            IEnumerable<WishListEntity> wishLists = await wishListServices.GetWishListByUserID(userID);
+            if (wishLists != null)
+            {
+                return Ok(new ResponseModel<IEnumerable<WishListEntity>> { Status = true, Message = "succesfull to get all wish list", Data = wishLists });
+            }
+            return BadRequest(new ResponseModel<bool> { Status = false, Message = "unsuccesfull to get all wish list" });
+
         }
     }
 }
