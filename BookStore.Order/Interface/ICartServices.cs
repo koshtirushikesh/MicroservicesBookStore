@@ -6,5 +6,6 @@ namespace BookStore.Order.Interface
     {
         Task<CartEntity> AddCart(int quantity, int bookID, int userID, string token);
         bool RemoveCart(int bookID, int userID);
+        Task<IEnumerable<CartEntity>> GetAllCartByUserID(int userID);
     }
 }

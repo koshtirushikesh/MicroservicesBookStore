@@ -47,7 +47,20 @@ namespace BookStore.Order.Controllers
             {
                 return Ok(new ResponseModel<bool> { Status = true, Message = "succesfull to remove from cart" });
             }
-            return BadRequest(new ResponseModel<bool> { Status = true, Message = "unsuccesfull to remove from cart" });
+            return BadRequest(new ResponseModel<bool> { Status = false, Message = "unsuccesfull to remove from cart" });
+        }
+
+        [HttpGet("GetAllCartByUserID")]
+        public async Task<IActionResult> GetAllCartByUserID()
+        {
+            int userID = Convert.ToInt32(User.FindFirstValue("UserID"));
+
+            IEnumerable<CartEntity> carts = await cartServices.GetAllCartByUserID(userID);
+            if(carts != null)
+            {
+                return Ok(new ResponseModel<IEnumerable<CartEntity>> { Status = true, Message = "succesfull to get all cart", Data = carts });
+            }
+            return Ok(new ResponseModel<bool> { Status = false, Message = "unsuccesfull to get all cart" });
         }
     }
 }
