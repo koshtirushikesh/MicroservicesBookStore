@@ -53,6 +53,8 @@ namespace BookStore.Order
             builder.Services.AddTransient<IUserServices, UserServices>();
             builder.Services.AddTransient<IOrderServices, OrderServices>();
             builder.Services.AddTransient<IWishListService, WishListService>();
+            builder.Services.AddTransient<ICartServices, CartServices>();
+
             builder.Services.AddHttpClient("bookService", option =>
             {
                 option.BaseAddress = new Uri(builder.Configuration["BaseURL:Book"]);
