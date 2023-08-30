@@ -1,5 +1,6 @@
 ﻿using BookStore.Order.Entity;
 using BookStore.Order.Interface;
+using System.Net;
 
 namespace BookStore.Order.Service
 {
@@ -70,6 +71,25 @@ namespace BookStore.Order.Service
             {
                 throw ex;
             }
+        }
+
+        public async Task<IEnumerable<CartEntity>> GetAllCartByUserID(int userID)
+        {
+            try
+            {
+                IEnumerable<CartEntity> carts = orderDBContext.Cart.Where(x => x.UserID == userID);
+                
+                foreach(CartEntity cart in carts)
+                {
+                    cart.book = await bookServices.GetBookDetails(cart.BookID);
+                }
+                return carts;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }
