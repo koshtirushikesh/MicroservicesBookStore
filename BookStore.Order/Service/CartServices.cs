@@ -51,5 +51,25 @@ namespace BookStore.Order.Service
                 throw ex;
             }
         }
+
+        public bool RemoveCart(int bookID, int userID)
+        {
+            try
+            {
+                CartEntity cart = orderDBContext.Cart.FirstOrDefault(x => x.BookID == bookID && x.UserID == userID);
+                if (cart != null)
+                {
+                    orderDBContext.Remove(cart);
+                    orderDBContext.SaveChanges();
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
